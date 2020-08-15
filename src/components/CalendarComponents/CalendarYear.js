@@ -2,20 +2,22 @@ import React from "react";
 
 function CalendarYear(props) {
   const addYearClick = (event) => {
-    props.handleClick((prevState) => {
-      return {
-        ...prevState,
-        Year: prevState.Year + 1,
-      };
+    props.changeDate((prevState) => {
+      return new Date(
+        prevState.getFullYear() + 1,
+        prevState.getMonth(),
+        prevState.getDate()
+      );
     });
   };
 
   const minusYearClick = (event) => {
-    props.handleClick((prevState) => {
-      return {
-        ...prevState,
-        Year: prevState.Year - 1,
-      };
+    props.changeDate((prevState) => {
+      return new Date(
+        prevState.getFullYear() - 1,
+        prevState.getMonth(),
+        prevState.getDate()
+      );
     });
   };
 
@@ -23,7 +25,7 @@ function CalendarYear(props) {
     <div>
       <button onClick={minusYearClick}>Prev Year</button>
       <button onClick={addYearClick}>Next Year</button>
-      <h2 className={"year"}>{props.Year}</h2>
+      <h2 className="year">{props.year}</h2>
     </div>
   );
 }

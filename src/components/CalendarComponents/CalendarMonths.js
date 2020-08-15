@@ -17,45 +17,33 @@ function CalendarMonths(props) {
   ];
 
   const minusMonthClick = (event) => {
-    props.handleClick((prevState) => {
-      let month = prevState.Month - 1,
-        year = prevState.Year;
+    props.changeDate((prevState) => {
+      let month = prevState.getMonth() - 1,
+        year = prevState.getFullYear();
       if (month <= 0) {
         month = 12;
         year--;
       }
-      return {
-        ...prevState,
-        Month: month,
-        Year: year,
-      };
+      return new Date(year, month, prevState.getDate());
     });
   };
   const addMonthClick = (event) => {
     // consider Add Month will affect Year
-    props.handleClick((prevState) => {
-      let month = prevState.Month + 1,
-        year = prevState.Year;
+    props.changeDate((prevState) => {
+      let month = prevState.getMonth() + 1,
+        year = prevState.getFullYear();
       if (month > 12) {
         month = 1;
         year++;
       }
-
-      return {
-        ...prevState,
-        Month: month,
-        Year: year,
-      };
+      return new Date(year, month, prevState.getDate());
     });
   };
 
   const monthList = monthTitle.map((elem, index) => {
     return (
-      <li>
-        <label
-          title={elem}
-          className={props.Month - 1 === index ? "selected" : ""}
-        >
+      <li key={index}>
+        <label title={elem} className={props.month === index ? "selected" : ""}>
           {elem}
         </label>
       </li>

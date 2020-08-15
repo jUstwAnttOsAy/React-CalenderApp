@@ -4,34 +4,23 @@ function CalendarDays(props) {
   const dayClick = (event) => {
     const { year, month, date } = event.target.attributes;
     const newDate = new Date(year.value, month.value, date.value);
-    props.handleClick({
-      Year: newDate.getFullYear(),
-      Month: newDate.getMonth() + 1,
-      Day: newDate.getDay(),
-      Date: newDate.getDate(),
-    });
+    props.changeDate(newDate);
   };
 
-  const selectedYear = props.Date.Year;
-  const selectedMonth = props.Date.Month - 1;
+  const selectedYear = props.date.getFullYear();
+  const selectedMonth = props.date.getMonth();
   const firstDayOfMonth = new Date(selectedYear, selectedMonth, 1);
   const lastDayOfMonth = new Date(selectedYear, selectedMonth + 1, 0);
-  console.log(selectedYear);
-  console.log(selectedMonth);
-  console.log(firstDayOfMonth);
-  console.log(lastDayOfMonth);
 
-  console.log(firstDayOfMonth.getDay());
   const preDayCount =
     firstDayOfMonth.getDay() === 0 ? 6 : firstDayOfMonth.getDay() - 1;
   const prevDays = Array.from(new Array(preDayCount), (elem, index) =>
     new Date(firstDayOfMonth - 86400000 * (preDayCount - index)).getDate()
   );
-  console.log(prevDays);
 
-  const prevDayList = prevDays.map((elem) => {
+  const prevDayList = prevDays.map((elem, index) => {
     return (
-      <li>
+      <li key={index}>
         <button className="notthisMonth">{elem}</button>
       </li>
     );
@@ -42,15 +31,15 @@ function CalendarDays(props) {
     (elem, index) => index + 1
   );
 
-  const thisDayList = thisDays.map((elem) => {
+  const thisDayList = thisDays.map((elem, index) => {
     return (
-      <li>
+      <li key={index}>
         <button
-          className={elem === props.Date.Date ? "selected" : ""}
+          className={elem === props.date.getDate() ? "selected" : ""}
           onClick={dayClick}
-          Year={selectedYear}
-          Month={selectedMonth}
-          Date={elem}
+          year={selectedYear}
+          month={selectedMonth}
+          date={elem}
         >
           {elem}
         </button>
@@ -63,9 +52,9 @@ function CalendarDays(props) {
     (elem, index) => index + 1
   );
 
-  const nextDayList = nextDays.map((elem) => {
+  const nextDayList = nextDays.map((elem, index) => {
     return (
-      <li>
+      <li key={index}>
         <button className="notthisMonth">{elem}</button>
       </li>
     );

@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import CalendarComponent from "./components/CalendarComponent";
-import TodoComponent from "./components/TodoComponent";
+import NoteComponent from "./components/NoteComponent";
 
 function App() {
+  const [selectedDate, setSelectedDate] = useState(() => {
+    // Default is Today
+    const date = new Date();
+    return date;
+  });
+
+  useEffect(() => {
+    console.log(
+      `Now Date is ${selectedDate.getFullYear()}-${
+        selectedDate.getMonth() + 1
+      }-${selectedDate.getDate()}`
+    );
+    // Go to Change NoteList
+  }, [selectedDate]);
+
   return (
     <div className="calendar">
       <div className="col leftCol">
-        <TodoComponent />
+        <NoteComponent date={selectedDate} />
       </div>
-      <CalendarComponent />
+      <CalendarComponent date={selectedDate} changeDate={setSelectedDate} />
       <div className="clearfix"></div>
     </div>
   );

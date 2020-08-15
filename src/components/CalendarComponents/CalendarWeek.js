@@ -5,7 +5,7 @@ function CalendarWeek() {
 
   const weekList = weekTitle.map((elem, index) => {
     return (
-      <li>
+      <li key={index}>
         <label title={elem} data-value={index}>
           {elem}
         </label>

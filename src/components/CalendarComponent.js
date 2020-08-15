@@ -1,34 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import CalendarYear from "./CalendarComponents/CalendarYear";
 import CalendarMonths from "./CalendarComponents/CalendarMonths";
 import CalendarWeek from "./CalendarComponents/CalendarWeek";
 import CalendarDays from "./CalendarComponents/CalendarDays";
 
-function CalendarComponent() {
-  const now = new Date();
-  const nowData = {
-    Year: now.getFullYear(),
-    Month: now.getMonth() + 1,
-    Day: now.getDay(),
-    Date: now.getDate(),
-  };
-  const [selectedDate, setDate] = useState(nowData);
-
-  useEffect(() => {
-    console.log(
-      `selected change! ${selectedDate.Year}-${selectedDate.Month}-${selectedDate.Date}`
-    );
-  }, [selectedDate]);
+function CalendarComponent(props) {
+  const year = props.date.getFullYear();
+  const month = props.date.getMonth();
 
   return (
     <div className="col rightCol">
       <div className="content">
-        <CalendarYear Year={selectedDate.Year} handleClick={setDate} />
-        <CalendarMonths Month={selectedDate.Month} handleClick={setDate} />
+        <CalendarYear year={year} changeDate={props.changeDate} />
+        <CalendarMonths month={month} changeDate={props.changeDate} />
         <div className="clearfix"></div>
-        <CalendarWeek Day={selectedDate.Day} />
+        <CalendarWeek />
         <div className="clearfix"></div>
-        <CalendarDays Date={selectedDate} handleClick={setDate} />
+        <CalendarDays date={props.date} changeDate={props.changeDate} />
         <div className="clearfix"></div>
       </div>
     </div>
